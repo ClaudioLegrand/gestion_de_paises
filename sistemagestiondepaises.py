@@ -4,21 +4,21 @@ import os
 # --------------------------------------------------
 def menu():
     print('''\n
-          ------------------------------------------
-                       GESTION DE PAISES                       
-          ------------------------------------------
-          
-          1 - Agregar país
-          2 - Actualizar datos del país
-          3 - Buscar país
-          4 - Filtrar país
-          5 - Ordenar paises
-          6 - Mostrar estadisticas
-          7 - Ver todos los paises
-          8 - Salir
-          
-          ------------------------------------------
-          ''')  
+        ------------------------------------------
+                    GESTION DE PAISES                       
+        ------------------------------------------
+        
+        1 - Agregar país
+        2 - Actualizar datos del país
+        3 - Buscar país
+        4 - Filtrar país
+        5 - Ordenar paises
+        6 - Mostrar estadisticas
+        7 - Ver todos los paises
+        8 - Salir
+        
+        ------------------------------------------
+        ''')  
     
 def cargardatos(archivo):
 #cargar datos desde el archivo csv  
@@ -31,7 +31,7 @@ def cargardatos(archivo):
             print("SE CREO UN NUEVO ARCHIVO") #<------------- TESTEO DE IF PARA CREAR ARCHIVO SI NO EXISTE
             pass
     else:
-        with open(archivopaises,"r",encoding="utf-8") as archivopaises:
+        with open(archivo,"r",encoding="utf-8") as archivopaises:
             next(archivopaises)
             for fila in archivopaises:
                 partes=fila.strip().split(",")
@@ -51,7 +51,7 @@ def cargardatos(archivo):
 print("\nCargando datos...")
 #carga de datos del archivo en variable
 ruta_actual = os.path.dirname(__path__ if '__path__' in locals() else __file__)
-archivopaises= os.path.join(ruta_actual, "datos", "paises.csv")
+archivopaises= os.path.join(ruta_actual, "datos/paises.csv")
 paises=cargardatos(archivopaises)
 print("Datos cargados correctamente!")
 
