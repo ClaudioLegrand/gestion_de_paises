@@ -1,3 +1,7 @@
+import os
+# --------------------------------------------------
+#                   MENU PRINCIPAL
+# --------------------------------------------------
 def menu():
     print('''\n
           ------------------------------------------
@@ -15,13 +19,41 @@ def menu():
           
           ------------------------------------------
           ''')  
-'''
----------
-MAIN DEL SISTEMA
----------'''
+    
+def cargardatos(archivo):
+#cargar datos desde el archivo csv  
+#retorna una lista de diccionarios
+    paises=[]
+    dirpaises={}
+    if not os.path.exists(archivo):
+        print("MOSTRAR ERROR Y CREARLO")
+        with open(archivo, "w", encoding="utf-8"):
+            print("SE CREO UN NUEVO ARCHIVO") #<------------- TESTEO DE IF PARA CREAR ARCHIVO SI NO EXISTE
+            pass
+    else:
+        with open(archivopaises,"r",encoding="utf-8") as archivopaises:
+            next(archivopaises)
+            for fila in archivopaises:
+                partes=fila.strip().split(",")
+                dirpaises = {
+                    "pais": partes[0], #. <------------------- MEJORAR PARA NO PONER INDICES -- QUE PASA SI SE AGREGA CAPITAL? 
+                    "poblacion": partes[1],
+                    "superficie": partes[2],
+                    "continente": partes[3]
+                }
+                paises.append(dirpaises)
+        print(paises)
+    
+# --------------------------------------------------
+#                  MAIN DEL SISTEMA
+# --------------------------------------------------
+
 print("\nCargando datos...")
-#CARGAR ARCHIVO ANTES DE ESTO
+#carga de datos del archivo en variable
+archivopaises="paises.csv"
+paises=cargardatos(archivopaises)
 print("Datos cargados correctamente!")
+
 while True:
     menu()
     opcion=input("Ingrese una opción numerica [1-8]: ")
@@ -43,6 +75,7 @@ while True:
         elif opcion== "8":
             pass
             break
+            #guardardatos(paises) #GUARDAR ANTES DE SALIR
         else:
             print("Error: Opción seleccionada no es correcta, reintente: ")
     except ValueError:
