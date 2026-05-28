@@ -27,9 +27,8 @@ def cargardatos(archivo):
     dirpaises={}
     if not os.path.exists(archivo):
         print("MOSTRAR ERROR Y CREARLO")
-        with open(archivo, "w", encoding="utf-8"):
-            print("SE CREO UN NUEVO ARCHIVO") #<------------- TESTEO DE IF PARA CREAR ARCHIVO SI NO EXISTE
-            pass
+        with open(archivo, "w", encoding="utf-8") as f:
+            return paises
     else:
         with open(archivo,"r",encoding="utf-8") as archivopaises:
             next(archivopaises)
