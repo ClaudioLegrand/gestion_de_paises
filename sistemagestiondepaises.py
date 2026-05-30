@@ -46,7 +46,7 @@ def cargardatos(archivo):
 # --------------------------------------------------
 #              ACTUALIZAR DATOS DE PAIS
 # --------------------------------------------------
-def actualizardatospais(pais2es):
+def actualizardatospais(paises):
     print("""
         ------------------------------------------
                     ACTUALIZAR PAIS                      
@@ -64,16 +64,16 @@ def actualizardatospais(pais2es):
                 nuevapoblacion=input("Ingrese la nueva población [Enter para mantener la actual]\n").strip()
                 nuevasuperficie=input("Ingrese la nueva superficie [Enter para mantener la actual]\n").strip()
                 if nuevapoblacion:
-                    pais["poblacion"]=validar_numero_correcto(nuevapoblacion,"poblacion")
+                    pais["poblacion"]=validar_numero_correcto(nuevapoblacion)
                 if nuevasuperficie:
-                    pais["superficie"]=validar_numero_correcto(nuevasuperficie, "superficie")
+                    pais["superficie"]=validar_numero_correcto(nuevasuperficie)
                 print(f"Los datos de {pais["nombre"]} fueron actulizados correctamente")    
-            except ValueError as e:
-                print(f"Error: Valor ingresado es incorrecto -> {e}")
+            except ValueError:
+                print(f"Error: Valor ingresado es incorrecto [Ingrese valor entero positivo]")
                 return
     else: print("Error: Pais no encontrado [puede cargar un país en la opción 1]")
             
-def validar_numero_correcto(vnc_nuevapoblacion, variablearevisar):
+def validar_numero_correcto(vnc_nuevapoblacion):
     numero_de_poblacion= int(vnc_nuevapoblacion)
     try:
         if numero_de_poblacion <=0:
@@ -81,6 +81,7 @@ def validar_numero_correcto(vnc_nuevapoblacion, variablearevisar):
         return numero_de_poblacion   
     except ValueError:
         raise ValueError(f"Error: El valor ingresado debe ser un valor entero positivo")
+
         
     
         
