@@ -57,7 +57,7 @@ def actualizardatospais(paises):
     for pais in paises:
         if pais["nombre"].lower() == nombrepais:
             #QUE SE MUESTRE ACTUALIZAR POBLACION: [SI NO QUIERE ACTUALIZAR PRESIONE "ENTER"]
-            #QUE PASA SI TIENE ACENTOS? COMO HAGO PARA QUE NO LOS TENGA EN CUENTA?
+            #QUE PASA SI TIENE ACENTOS? COMO HAGO PARA QUE NO LOS TENGA EN CUENTA? (usar libreria unicode)
             try:
                 print(f"Datos actuales de -- {pais["nombre"]} --\n")
                 print(f"Población: {pais["poblacion"]} | Superficie: {pais["superficie"]}")
@@ -67,23 +67,26 @@ def actualizardatospais(paises):
                     pais["poblacion"]=validar_numero_correcto(nuevapoblacion)
                 if nuevasuperficie:
                     pais["superficie"]=validar_numero_correcto(nuevasuperficie)
-                print(f"Los datos de {pais["nombre"]} fueron actulizados correctamente")    
+                if not nuevapoblacion and not nuevasuperficie:
+                    print("No se actualizó ningún registro")
+                    break
+                else:
+                    print(f"Los datos de {pais["nombre"]} fueron actulizados correctamente")
+                    break 
             except ValueError:
-                print(f"Error: Valor ingresado es incorrecto [Ingrese valor entero positivo]")
+                print(f"Error: Valor ingresado es incorrecto [Ingrese valor entero positivo o ENTER si no requiere actualización]")
                 return
-    else: print("Error: Pais no encontrado [puede cargar un país en la opción 1]")
+    else: print(f"Error: Pais '{nombrepais}' no encontrado [puede cargar un país en la opción 1]")
             
-def validar_numero_correcto(vnc_nuevapoblacion):
-    numero_de_poblacion= int(vnc_nuevapoblacion)
+def validar_numero_correcto(vnc_nuevavalidacion):
+    numero_a_verificar= int(vnc_nuevavalidacion)
     try:
-        if numero_de_poblacion <=0:
+        if numero_a_verificar <=0:
             raise ValueError #Lanza error si pasa esto (habilita el except del valuerror)
-        return numero_de_poblacion   
+        print(f"ESTE ES EL VALOR DE NUMERO DE VERIFICAR: {numero_a_verificar}")
+        return numero_a_verificar   
     except ValueError:
         raise ValueError(f"Error: El valor ingresado debe ser un valor entero positivo")
-
-        
-    
         
           
 # --------------------------------------------------
