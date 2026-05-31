@@ -21,6 +21,8 @@ def menu():
         ------------------------------------------
         ''')  
     
+# ----------------------------------------------------------------  EXCEPT POR SI SE UTILIZA EL ARCHIVO
+# ----------------------------------------------------------------  EXCEPT POR SI CAMBIA EL NOMBRE
 def cargardatos(archivo):
 #cargar datos desde el archivo csv  
 #retorna una lista de diccionarios
@@ -38,30 +40,102 @@ def cargardatos(archivo):
                 dirpaises = dict(zip(encabezado, partes))
                 paises.append(dirpaises)
 
-# funcion para guardar datos en el archivo csv
-# def guardar_datos(paises, archivo):
-#     with open(archivo, "w", encoding="utf-8") as f:
-#         if paises:
-#             f.write(",".join(paises[0].keys()) + "\n")
-#             for pais in paises:
-#                 f.write(",".join(pais.values()) + "\n")
-#     area = input("Ingrese el área del país (en km²): ")
-#     idioma = input("Ingrese el idioma oficial del país: ")
+    return paises
 
+# funcion para guardar los datos del país en la lista de diccionarios
+def guardar_datos(paises):
+    # ----------------------------------------------------------------------- LISTA PARA VERIFICAR SI EXISTE EL PAIS
 
-
-# funcion que valida numero enteros
-def validar_entero(numero):
-    try:
-        
-        while numero.strip() == "" or not numero.isdigit():
-            print("Error: vuelva a intentar.")
-            numero = input("vuelva a intentar: ")
-
-        return int(numero)
+    # verificamos de que no ingrese un país que ya existe en el sistema
     
-    except ValueError:
-        print("Error: Por favor, ingrese un número entero.") #----------------------- Verificar mejor las except
+    # pedimos el nombre del país
+    nombre = pedir_texto("Ingrese el nombre del país para agregar: ")
+
+    # recorremos la lista por si ya existe el pais
+    for p in paises:
+        if p["nombre"].lower() == nombre.lower():
+            print("El país ya existe en el sistema, no puede continuar.")
+            return
+
+    # pedimos la poblacion del pais y validamos
+    poblacion = pedir_entero("Ingrese la población del país: ") #------------------------- verificar si es solo entero
+
+    # pedimos la superficie del pais
+    superficie = pedir_entero("Ingrese la superficie del país: ")
+
+    # pedimos el continente del pais
+    continente = pedir_texto("Ingrese el continente del país: ").lower()
+    # ---------------------------------------------------------------------- falta mejorar validaciones
+
+    # creamos un diccionario para el país y lo agregamos a la lista de países
+    pais = {
+        "nombre": nombre,
+        "poblacion": poblacion,
+        "superficie": superficie,
+        "continente": continente
+    }
+
+    # lo apregamos a la lista de países
+    paises.append(pais)
+    return True
+
+
+# ------------------------------------------------------------------ funcion solo para agregar?
+# funcion para agregar datos al archivo csv
+def añadir_datos_archivo(paises, archivo):
+    try:
+        with open(archivo, "a", encoding="utf-8") as f:
+            for p in paises:
+                linea = f"{p['nombre']},{p['poblacion']},{p['superficie']},{p['continente']}\n"
+                f.write(linea)
+
+        print("País agregado y guardado correctamente!")
+
+    except FileNotFoundError:
+        print("Error: El archivo no existe. No se pudieron guardar los datos.")
+    except IOError:
+        print("Error: No se pudieron guardar los datos en el archivo.") #---------------------- ver si se puede usar
+    except Exception as e:
+        print(f"Error inesperado: {e}")
+
+
+# funcion para pedir un numero entero
+def pedir_entero(mensaje):
+    
+    # usamos un whale para validar de que sea un numero entero y no un texto o un numero decimal
+    while True:
+
+        # pedimos un numero entero y validamos con try except
+        entrada = input(mensaje).strip()
+        
+        try:
+            # lo convertimos a entero
+            numero = int(entrada)
+            
+            # si es un numero entero positivo, lo retornamos, sino mostramos un mensaje de error
+            if numero >= 0:
+                return numero
+            else:
+                print("Error: El numero no puede ser negativo")
+
+        except ValueError:
+            print("Error: Debe ingresar un número entero válido.")
+
+# funcion para pedir texto
+def pedir_texto(mensaje):
+    while True:
+        entrada = input(mensaje).strip()
+        
+        # validamos que no esté vacío
+        if entrada == "":
+            print("Error: El campo no puede quedar vacío.")
+            
+        # validamos que no sean solo números (ej: "1234")
+        elif entrada.isdigit() or entrada < "0":
+            print("Error: Debe ingresar texto, no un número.")
+            
+        else:
+            return entrada
 
 # --------------------------------------------------
 #                  MAIN DEL SISTEMA
@@ -74,8 +148,6 @@ archivopaises= os.path.join(ruta_actual, "datos/paises.csv")
 paises=cargardatos(archivopaises)
 print("Datos cargados correctamente!")
 
-print("\nBienvenido al sistema de gestión de países")
-
 opcion = 0
 
 while opcion != 8:
@@ -84,13 +156,19 @@ while opcion != 8:
     menu()
 
     # pedimos al usuario que ingrese una opción y validamos
-    opcion = validar_entero(input("\nOpción (1-8): "))
+    opcion = pedir_entero("\nOpción (1-8): ")
 
     try:
         match opcion:
             case 1:
-                print("AGREGAR PAIS")
-                #agregar_pais(paises)
+
+                # pedimos los datos del país al usuario y los guardamos en un diccionario
+                diccionarioCreado = guardar_datos(paises)
+
+                # guardamos el diccionario en el archivo csv
+                if diccionarioCreado:
+                    añadir_datos_archivo(paises, archivopaises)
+
             case 2:
                 print("ACTUALIZAR DATOS DEL PAIS")
                 #actualizar_pais(paises)    
@@ -117,4 +195,3 @@ while opcion != 8:
                 print("Opción no válida. Por favor, seleccione una opción del 1 al 8. \n")
     except ValueError:
             print("Error: Valor ingresado es incorrecto") #ponerlo????????????
-    
