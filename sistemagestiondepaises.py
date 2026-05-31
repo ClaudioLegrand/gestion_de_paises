@@ -79,6 +79,23 @@ def guardar_datos(paises):
     paises.append(pais)
     return True
 
+# funcion para buscar un pais
+def buscar_pais_por_nombre(paises):
+
+    # pedimos el pais para buscarlo en la lista
+    pais = pedir_texto("Ingrese el pais a buscar: ")
+
+    # recorremoc la lista y buscamos el pais
+    for p in paises:
+        if p["nombre"].lower() == pais.lower():
+            
+            print(f"Pais: {p['nombre']} | Poblacion: {p['poblacion']} | Superficie: {p['superficie']} | Continente: {p['continente']} \n")
+            return
+        
+        # ------------------------------------------------------------------------------  OTRO MENSAJE
+    
+    print("Pais no encontrado...")
+
 
 # ------------------------------------------------------------------ funcion solo para agregar?
 # funcion para agregar datos al archivo csv
@@ -173,8 +190,10 @@ while opcion != 8:
                 print("ACTUALIZAR DATOS DEL PAIS")
                 #actualizar_pais(paises)    
             case 3:
-                print("BUSCAR PAIS")
-                #buscar_pais(paises)
+                
+                # pedimos el pais que quiere buscar y lo mostramos
+                buscar_pais_por_nombre(paises)
+                
             case 4:
                 print("FILTRAR PAIS")
                 #filtrar_pais(paises)
