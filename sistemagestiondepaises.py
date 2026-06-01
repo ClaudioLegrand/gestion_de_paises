@@ -99,30 +99,32 @@ def actualizardatospais(paises):
                     ACTUALIZAR PAIS                      
         ------------------------------------------
         """)
-    nombrepais = pedir_texto("Ingrese nombre de pais a actualizar: ").lower()
-
-    for pais in paises:
-        if normalizar(pais["nombre"]) == normalizar(nombrepais):
-            try:
-                print(f"Datos actuales de -- {pais['nombre']} --\n")
-                print(f"Población: {pais['poblacion']} | Superficie: {pais['superficie']}")
-                nuevapoblacion = input("Ingrese la nueva población [Enter para mantener la actual]\n").strip()
-                nuevasuperficie = input("Ingrese la nueva superficie [Enter para mantener la actual]\n").strip()
-                if nuevapoblacion:
-                    pais["poblacion"] = validar_numero_correcto(nuevapoblacion)
-                if nuevasuperficie:
-                    pais["superficie"] = validar_numero_correcto(nuevasuperficie)
-                if not nuevapoblacion and not nuevasuperficie:
-                    print("No se actualizó ningún registro")
-                    break
-                else:
-                    print(f"Los datos de {pais['nombre']} fueron actualizados correctamente")
-                    break
-            except ValueError:
-                print("Error: Valor ingresado es incorrecto [Ingrese valor entero positivo o ENTER si no requiere actualización]")
-                return
-    else:
-        print(f"Error: Pais '{nombrepais}' no encontrado [puede cargar un país en la opción 1]")
+    while True:
+        nombrepais = pedir_texto("Ingrese nombre de pais a actualizar [Use 'salir' para volver al menu principal]:  ").lower()
+        if nombrepais == "salir":
+            break
+        for pais in paises:
+            if normalizar(pais["nombre"]) == normalizar(nombrepais):
+                try:
+                    print(f"Datos actuales de -- {pais['nombre']} --\n")
+                    print(f"Población: {pais['poblacion']} | Superficie: {pais['superficie']}")
+                    nuevapoblacion = input("Ingrese la nueva población [Enter para mantener la actual]\n").strip()
+                    nuevasuperficie = input("Ingrese la nueva superficie [Enter para mantener la actual]\n").strip()
+                    if nuevapoblacion:
+                        pais["poblacion"] = validar_numero_correcto(nuevapoblacion)
+                    if nuevasuperficie:
+                        pais["superficie"] = validar_numero_correcto(nuevasuperficie)
+                    if not nuevapoblacion and not nuevasuperficie:
+                        print("No se actualizó ningún registro")
+                        break
+                    else:
+                        print(f"Los datos de {pais['nombre']} fueron actualizados correctamente")
+                        break
+                except ValueError:
+                    print("Error: Valor ingresado es incorrecto [Ingrese valor entero positivo o ENTER si no requiere actualización]")
+                    return
+        else:
+            print(f"Error: Pais '{nombrepais}' no encontrado [puede cargar un país en la opción 1]")
 
 #VALIDA NUMERO CORRECTO Y NO TIENE EN CUENTA SI EL USUARIO DEJA EL ESPACIO VACIO (NO ACTUALIZA EL REGISTRO)
 def validar_numero_correcto(vnc_nuevavalidacion):
