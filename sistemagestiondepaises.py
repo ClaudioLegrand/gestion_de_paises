@@ -1,5 +1,5 @@
 import os
-from unittest import case
+
 # --------------------------------------------------
 #                   MENU PRINCIPAL
 # --------------------------------------------------
@@ -83,19 +83,18 @@ def guardar_datos(paises):
 def buscar_pais_por_nombre(paises):
 
     # pedimos el pais para buscarlo en la lista
-    pais = pedir_texto("Ingrese el pais a buscar: ")
+    pais = pedir_texto("Ingrese el pais a buscar: ").lower()
 
-    # recorremoc la lista y buscamos el pais
+    # lista que guarda las coincidencias encontradas
+    coincidencias = []
+
+    # recorremos la lista y buscamos el pais
     for p in paises:
-        if p["nombre"].lower() == pais.lower():
-            
-            print(f"Pais: {p['nombre']} | Poblacion: {p['poblacion']} | Superficie: {p['superficie']} | Continente: {p['continente']} \n")
-            return
-        
-        # ------------------------------------------------------------------------------  OTRO MENSAJE
-    
-    print("Pais no encontrado...")
+        if pais in p["nombre"].lower():
+            coincidencias.append(p)
 
+    outputmostrardatos(coincidencias)
+        # ------------------------------------------------------------------------------  OTRO MENSAJE
 
 # ------------------------------------------------------------------ funcion solo para agregar?
 # funcion para agregar datos al archivo csv
@@ -110,11 +109,51 @@ def añadir_datos_archivo(paises, archivo):
 
     except FileNotFoundError:
         print("Error: El archivo no existe. No se pudieron guardar los datos.")
-    except IOError:
-        print("Error: No se pudieron guardar los datos en el archivo.") #---------------------- ver si se puede usar
     except Exception as e:
         print(f"Error inesperado: {e}")
 
+# funcion para ordenar
+def ordenar_paises(paises, criterio):
+    lista_copia = paises.copy()
+
+    c = len(paises)
+
+    for indice_pasada in range(c - 1):
+
+        for indice_actual in range(c - 1 - indice_pasada):
+            
+            # si el criterio es ordenarlo por nombres
+            if criterio == "nombre":
+                pass
+
+            # si el criterio es ordenarlo por poblacion
+            elif criterio == "poblacion":
+                pass
+
+            # si el criterio es ordenarlo por superficie
+            else:
+                pass
+    
+
+    return lista_copia
+
+def outputmostrardatos(paises):
+    """Muestra una lista de países en formato tabla."""
+    print("""
+        ------------------------------------------
+                MOSTRAR DATOS EN TABLA
+        ------------------------------------------
+        """)
+    if not paises:
+        print("[INFO]: Lista vacía.")
+        return
+
+    # Encabezado
+    print(f"{'Nombre':<20} {'Población':>15} {'Superficie':>15}  {'Continente':<12}") #se usan <xx, para limitar los espacios DE CARACTERES QUE OCUPAN
+    print("-" * 65)
+
+    for p in paises:
+        print(f"{p['nombre']:<20} {int(p['poblacion']):>15,} {int(p['superficie']):>15,}  {p['continente']:<12}")
 
 # funcion para pedir un numero entero
 def pedir_entero(mensaje):
@@ -198,14 +237,40 @@ while opcion != 8:
                 print("FILTRAR PAIS")
                 #filtrar_pais(paises)
             case 5:
-                print("ORDENAR PAISES")
-                #ordenar_paises(paises)
+                opcion = 0
+
+                while opcion != 4:
+                    print("\nOrdenar paises:")
+                    print("1 - Por Nombre")
+                    print("2 - Por Poblacion")
+                    print("3 - por Superficie")
+                    print("4 - Salir al menu")
+
+                    # ------------------ preguntar acendente o desendiente
+
+                    opcion = pedir_entero("\nOpción (1-4): ")
+
+                    match opcion:
+                        case 1:
+                            diccionario_ordenado = ordenar_paises(paises, "nombre")
+
+                        case 2:
+                            diccionario_ordenado = ordenar_paises(paises, "poblacion")
+
+                        case 3:
+                            diccionario_ordenado = ordenar_paises(paises, "superficie")
+
+                        case 4:
+                            print("Saliendo al menu ")
+                        case _:
+                            print("No se encuentra entre las opciones \n")
+
             case 6:
                 print("VER ESTADISTICAS")
                 #ver_estadisticas(paises)
             case 7:
                 print("VER TODOS LOS PAISES")
-                #ver_todos_los_paises(paises)
+                outputmostrardatos(paises)
             case 8:
                 #guardardatos(paises) #GUARDAR ANTES DE SALIR
 
