@@ -113,7 +113,7 @@ def añadir_datos_archivo(paises, archivo):
         print(f"Error inesperado: {e}")
 
 # funcion para ordenar
-def ordenar_paises(paises, criterio):
+def ordenar_paises(paises, criterio, orden):
     lista_copia = paises.copy()
 
     c = len(paises)
@@ -124,18 +124,54 @@ def ordenar_paises(paises, criterio):
             
             # si el criterio es ordenarlo por nombres
             if criterio == "nombre":
-                pass
+
+                # almacenamos el elemento actual y el siguiente para compararlos
+                elemento_actual = lista_copia[indice_actual]["nombre"].lower()
+                elemento_siguiente = lista_copia[indice_actual + 1]["nombre"].lower()
+
+                # Ascendente
+                if orden == 1:  
+                    if elemento_actual > elemento_siguiente:
+                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+                
+                # Descendente
+                else:  
+                    if elemento_actual < elemento_siguiente:
+                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
 
             # si el criterio es ordenarlo por poblacion
             elif criterio == "poblacion":
-                pass
+                
+                elemento_actual = int(lista_copia[indice_actual]["poblacion"])
+                elemento_siguiente = int(lista_copia[indice_actual + 1]["poblacion"])
+
+                # Ascendente
+                if orden == 1:  
+                    if elemento_actual > elemento_siguiente:
+                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+                
+                # Descendente
+                else:  
+                    if elemento_actual < elemento_siguiente:
+                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
 
             # si el criterio es ordenarlo por superficie
             else:
-                pass
-    
 
-    return lista_copia
+                elemento_actual = int(lista_copia[indice_actual]["superficie"])
+                elemento_siguiente = int(lista_copia[indice_actual + 1]["superficie"])
+
+                # Ascendente
+                if orden == 1:  
+                    if elemento_actual > elemento_siguiente:
+                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+                
+                # Descendente
+                else:  
+                    if elemento_actual < elemento_siguiente:
+                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+
+    outputmostrardatos(lista_copia)
 
 def outputmostrardatos(paises):
     """Muestra una lista de países en formato tabla."""
@@ -248,17 +284,20 @@ while opcion != 8:
 
                     # ------------------ preguntar acendente o desendiente
 
-                    opcion = pedir_entero("\nOpción (1-4): ")
+                    opcion_orden = pedir_entero("\nOpción (1-4): ")
 
-                    match opcion:
+                    print(f"Ordenar de forma ascendente o descendente?")
+                    opcion_forma = pedir_entero("1 - Asc | 2 - Des: ")
+
+                    match opcion_orden:
                         case 1:
-                            diccionario_ordenado = ordenar_paises(paises, "nombre")
+                            diccionario_ordenado = ordenar_paises(paises, "nombre", opcion_forma)
 
                         case 2:
-                            diccionario_ordenado = ordenar_paises(paises, "poblacion")
+                            diccionario_ordenado = ordenar_paises(paises, "poblacion", opcion_forma)
 
                         case 3:
-                            diccionario_ordenado = ordenar_paises(paises, "superficie")
+                            diccionario_ordenado = ordenar_paises(paises, "superficie", opcion_forma)
 
                         case 4:
                             print("Saliendo al menu ")
