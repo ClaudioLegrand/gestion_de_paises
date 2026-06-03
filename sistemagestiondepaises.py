@@ -125,7 +125,7 @@ def actualizardatospais(paises):
                     return
         else:
             print(f"Error: Pais '{nombrepais}' no encontrado [puede cargar un país en la opción 1]")
-
+        return
 #VALIDA NUMERO CORRECTO Y NO TIENE EN CUENTA SI EL USUARIO DEJA EL ESPACIO VACIO (NO ACTUALIZA EL REGISTRO)
 def validar_numero_correcto(vnc_nuevavalidacion):
     numero_a_verificar = int(vnc_nuevavalidacion)
@@ -357,7 +357,7 @@ def filtrar_por_continente(paises):
         ------------------------------------------
         
         """)
-    menucontinentes()
+    menucontinentes() #muesta menu de continentes para seleccionar
     seleccioncontinente=pedir_entero("Seleccione un continente [1-5]: ")
     match seleccioncontinente:
         case 1: filtrar_y_mostrar_continentes(paises, "America")
