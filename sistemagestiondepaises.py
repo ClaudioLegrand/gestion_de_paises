@@ -19,8 +19,22 @@ def menu():
         8 - Salir
         
         ------------------------------------------
-        ''')  
-    
+        ''')
+
+def menu_buscar_paises():
+    print('''\n
+        ------------------------------------------
+                    ORDENAR PAISES                       
+        ------------------------------------------
+        
+        1 - Por Nombre
+        2 - Por Poblacion
+        3 - Por Superficie
+        4 - Salir al menu
+        
+        ------------------------------------------
+        ''')
+
 # ----------------------------------------------------------------  EXCEPT POR SI SE UTILIZA EL ARCHIVO
 # ----------------------------------------------------------------  EXCEPT POR SI CAMBIA EL NOMBRE
 def cargardatos(archivo):
@@ -79,22 +93,6 @@ def guardar_datos(paises):
     paises.append(pais)
     return True
 
-# funcion para buscar un pais
-def buscar_pais_por_nombre(paises):
-
-    # pedimos el pais para buscarlo en la lista
-    pais = pedir_texto("Ingrese el pais a buscar: ").lower()
-
-    # lista que guarda las coincidencias encontradas
-    coincidencias = []
-
-    # recorremos la lista y buscamos el pais
-    for p in paises:
-        if pais in p["nombre"].lower():
-            coincidencias.append(p)
-
-    outputmostrardatos(coincidencias)
-        # ------------------------------------------------------------------------------  OTRO MENSAJE
 
 # ------------------------------------------------------------------ funcion solo para agregar?
 # funcion para agregar datos al archivo csv
@@ -112,66 +110,88 @@ def añadir_datos_archivo(paises, archivo):
     except Exception as e:
         print(f"Error inesperado: {e}")
 
-# funcion para ordenar
+# funcion para buscar un pais
+def buscar_pais_por_nombre(paises):
+
+    # pedimos el pais para buscarlo en la lista
+    pais_usuario = pedir_texto("Ingrese el pais a buscar: ").lower()
+
+    # lista que guarda las coincidencias encontradas
+    coincidencias = []
+
+    try:
+        # recorremos la lista y buscamos el pais
+        for p in paises:
+            if pais_usuario in str(p["nombre"]).lower():
+                coincidencias.append(p)
+
+        outputmostrardatos(coincidencias)
+
+    except KeyError as e:
+        print(f"Error al buscar el país: {e}")
+    except Exception as e:
+        print(f"Error inesperado al buscar el país: {e}")
+
+# funcion para ordenar paises
 def ordenar_paises(paises, criterio, orden):
+
+    # copiamos la lista para no modificar la original
     lista_copia = paises.copy()
+    cantidad_paises = len(paises)
 
-    c = len(paises)
+    try:
 
-    for indice_pasada in range(c - 1):
+        # para odenar usamos el metodo burbuja
+        for indice_pasada in range(cantidad_paises - 1):
 
-        for indice_actual in range(c - 1 - indice_pasada):
-            
-            # si el criterio es ordenarlo por nombres
-            if criterio == "nombre":
-
-                # almacenamos el elemento actual y el siguiente para compararlos
-                elemento_actual = lista_copia[indice_actual]["nombre"].lower()
-                elemento_siguiente = lista_copia[indice_actual + 1]["nombre"].lower()
-
-                # Ascendente
-                if orden == 1:  
-                    if elemento_actual > elemento_siguiente:
-                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+            for indice_actual in range(cantidad_paises - 1 - indice_pasada):
                 
-                # Descendente
-                else:  
-                    if elemento_actual < elemento_siguiente:
-                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+                # si el criterio es ordenarlo por nombres
+                lista_copia = mover_elementos(lista_copia, orden, criterio, indice_actual)
 
-            # si el criterio es ordenarlo por poblacion
-            elif criterio == "poblacion":
-                
-                elemento_actual = int(lista_copia[indice_actual]["poblacion"])
-                elemento_siguiente = int(lista_copia[indice_actual + 1]["poblacion"])
+        # mostramos la lista ordenada
+        outputmostrardatos(lista_copia)
 
-                # Ascendente
-                if orden == 1:  
-                    if elemento_actual > elemento_siguiente:
-                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
-                
-                # Descendente
-                else:  
-                    if elemento_actual < elemento_siguiente:
-                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+    # except para captura errores cuando trabajamos con estructura de datos y con conversiones de tipos
+    except KeyError:
+        print(f"Error: Falta la clave en los datos de los países.")
+    except ValueError:
+        print(f"Error: No se pudo procesar numéricamente el criterio '{criterio}'.")
+    except Exception as e:
+        print(f"Error inesperado al ordenar los países: {e}")
 
-            # si el criterio es ordenarlo por superficie
-            else:
+# funcion para mover elementos en la lista
+def mover_elementos(lista_copia, orden, criterio, indice_actual):
+    
 
-                elemento_actual = int(lista_copia[indice_actual]["superficie"])
-                elemento_siguiente = int(lista_copia[indice_actual + 1]["superficie"])
+    if criterio == "nombre":
+        ele_actual = lista_copia[indice_actual][criterio].lower()
+        ele_siguiente = lista_copia[indice_actual + 1][criterio].lower()
+    else: 
+        ele_actual = int(lista_copia[indice_actual][criterio])
+        ele_siguiente = int(lista_copia[indice_actual + 1][criterio])
 
-                # Ascendente
-                if orden == 1:  
-                    if elemento_actual > elemento_siguiente:
-                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
-                
-                # Descendente
-                else:  
-                    if elemento_actual < elemento_siguiente:
-                        lista_copia[indice_actual], lista_copia[indice_actual + 1] = lista_copia[indice_actual + 1], lista_copia[indice_actual]
+    debe_mover = False
 
-    outputmostrardatos(lista_copia)
+    match orden:
+
+        # Ascendente
+        case 1:  
+            if ele_actual > ele_siguiente:
+                debe_mover = True
+        # Descendente
+        case 2:  
+            if ele_actual < ele_siguiente:
+                debe_mover = True
+
+    if debe_mover:
+        # movemos el elemento actual a la posición del siguiente
+        lista_copia[indice_actual], lista_copia[indice_actual + 1] = (
+            lista_copia[indice_actual + 1], 
+            lista_copia[indice_actual]
+        )
+
+    return lista_copia
 
 def outputmostrardatos(paises):
     """Muestra una lista de países en formato tabla."""
@@ -273,36 +293,39 @@ while opcion != 8:
                 print("FILTRAR PAIS")
                 #filtrar_pais(paises)
             case 5:
-                opcion = 0
+                opcion_orden = 0
 
-                while opcion != 4:
-                    print("\nOrdenar paises:")
-                    print("1 - Por Nombre")
-                    print("2 - Por Poblacion")
-                    print("3 - por Superficie")
-                    print("4 - Salir al menu")
+                while opcion_orden != 4:
 
-                    # ------------------ preguntar acendente o desendiente
+                    # mostramos el menu para ordenar los paises
+                    menu_buscar_paises()
 
+                    # pedimos al usuario que ingrese una opción y validamos
                     opcion_orden = pedir_entero("\nOpción (1-4): ")
 
-                    print(f"Ordenar de forma ascendente o descendente?")
-                    opcion_forma = pedir_entero("1 - Asc | 2 - Des: ")
+                    if opcion_orden != 4:
 
-                    match opcion_orden:
-                        case 1:
-                            diccionario_ordenado = ordenar_paises(paises, "nombre", opcion_forma)
+                        # pedimos que forma de ordenamiento quiere, ascendente o descendente
+                        if opcion_orden in [1, 2, 3]:
+                            print(f"¿Ordenar de forma ascendente o descendente?")
 
-                        case 2:
-                            diccionario_ordenado = ordenar_paises(paises, "poblacion", opcion_forma)
+                            while True:
+                                opcion_forma = pedir_entero("1 - Asc | 2 - Des: ")
 
-                        case 3:
-                            diccionario_ordenado = ordenar_paises(paises, "superficie", opcion_forma)
+                                if opcion_forma in [1, 2]:
+                                    break
 
-                        case 4:
-                            print("Saliendo al menu ")
-                        case _:
-                            print("No se encuentra entre las opciones \n")
+                                print("Opción no válida. Por favor, seleccione 1 para ascendente o 2")
+
+                        # ordenamos los paises por el criterio seleccionado
+                        match opcion_orden:
+                            case 1: ordenar_paises(paises, "nombre", opcion_forma)
+                            case 2: ordenar_paises(paises, "poblacion", opcion_forma)
+                            case 3: ordenar_paises(paises, "superficie", opcion_forma)
+                            case _: print("No se encuentra entre las opciones")
+
+                print("Saliendo al menú principal...")
+
 
             case 6:
                 print("VER ESTADISTICAS")
