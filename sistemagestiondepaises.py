@@ -62,8 +62,9 @@ def cargardatos(archivo):
 
 # funcion para guardar los datos del país en la lista de diccionarios
 def guardar_datos(paises):
-    nombre = pedir_texto("Ingrese el nombre del país para agregar: ").capitalize()
-
+    nombre = pedir_texto("Ingrese el nombre del país para agregar [Use 'salir' para volver al menu principal]: ").capitalize()
+    if nombre == "Salir":
+        return
     for p in paises:
         if p["nombre"].lower() == nombre.lower():
             print("El país ya existe en el sistema, no puede continuar.")
@@ -469,7 +470,7 @@ def seleccionmenu():
     opcion = 0
     while opcion != 8:
         menu()
-        opcion = pedir_entero("\nOpción (1-8): ")
+        opcion = pedir_entero("\nSeleccione una opción (1-8): ")
         try:
             match opcion:
                 case 1:
