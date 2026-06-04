@@ -12,22 +12,22 @@ Aplicación desarrollada en Python 3.14.0 que permite gestionar un dataset de pa
 - Estadísticas básicas: país con mayor/menor población, promedio de población, promedio de superficie y cantidad de países por continente.
 
 El proyecto fue desarrollado como Trabajo Integrador de la materia Programación 1, con el objetivo de aplicar estructuras de datos (listas, diccionarios), modularización mediante funciones, manejo de archivos CSV y algoritmos de ordenamiento.
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Integrantes**
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Integrantes
+
 - Claudio Legrand (Comisión 19)
 - Christian Herrero (Comision 8)
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Requisitos**
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Requisitos
+
 - Python 3.14.0
 - No se requieren librerías externas (solo se usa os y unicodedata)
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Instalación y ejecución**
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instalación y ejecución
+
 1. Clonar el repositorio:
 Mediante bash con Google Colab de ser preferencia:
-!git clone (https://github.com/ClaudioLegrand/gestion_de_paises)
+!git clone https://github.com/ClaudioLegrand/gestion_de_paises
 
 2. Asegurar que exista la carpeta datos/ y dentro de ella el archivo paises.csv. Si no existe, el programa lo creará automáticamente al primer intento de carga.
 
@@ -36,9 +36,9 @@ Mediante bash con Google Colab de ser preferencia:
 4. Funcionalidades del sistema:
 Se desplegará el menu principal donde se podra observar las siguentes opciones:
 
------------------------------------------
-            GESTION DE PAISES                        
------------------------------------------
+---------------------------------
+      GESTION DE PAISES                        
+---------------------------------
 
 1 - Agregar país
 2 - Actualizar datos del país
@@ -50,9 +50,9 @@ Se desplegará el menu principal donde se podra observar las siguentes opciones:
 8 - Salir
 
 5. Seleccionar una opción a través del teclado númerico para interactuar con las opciones del sistema.
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Ejemplos de entrada/salida**
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ejemplos de entrada/salida
+
 1. Agregar pais:
    
 Ingrese el nombre del país para agregar: Chile
@@ -111,9 +111,9 @@ Japón                125,800,000     377,975   Asia
 Brasil               213,993,437   8,515,767   América
 Alemania              83,149,300     357,022   Europa
 Argentina             45,376,763   2,780,400   América
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Links importantes**
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Links importantes
+
 Video de Youtube: [link]
 Documento PDF: [drive]
 Repositorio de Github: https://github.com/ClaudioLegrand/gestion_de_paises
