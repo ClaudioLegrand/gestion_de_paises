@@ -1,6 +1,6 @@
-# Trabajo Práctico Integrador – Gestión de Datos de Países en Python
+Trabajo Práctico Integrador – Gestión de Datos de Países en Python
 
-## Descripción del programa
+Descripción del programa
 
 Aplicación desarrollada en Python 3.14.0 que permite gestionar un dataset de países. El sistema lee y guarda los datos desde y hacia un archivo CSV, y ofrece funcionalidades de:
 
@@ -12,19 +12,19 @@ Aplicación desarrollada en Python 3.14.0 que permite gestionar un dataset de pa
 - Estadísticas básicas: país con mayor/menor población, promedio de población, promedio de superficie y cantidad de países por continente.
 
 El proyecto fue desarrollado como Trabajo Integrador de la materia Programación 1, con el objetivo de aplicar estructuras de datos (listas, diccionarios), modularización mediante funciones, manejo de archivos CSV y algoritmos de ordenamiento.
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-## Integrantes
-
-- **Claudio Legrand** (Comisión 19)
-- **Christian Herrero** (Comision 8)
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-## Requisitos
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Integrantes**
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- Claudio Legrand (Comisión 19)
+- Christian Herrero (Comision 8)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Requisitos**
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 - Python 3.14.0
-- No se requieren librerías externas (solo se usa `os` y `unicodedata`)
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-## Instalación y ejecución
-
+- No se requieren librerías externas (solo se usa os y unicodedata)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Instalación y ejecución**
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. Clonar el repositorio:
 Mediante bash con Google Colab de ser preferencia:
 !git clone (https://github.com/ClaudioLegrand/gestion_de_paises)
@@ -34,11 +34,10 @@ Mediante bash con Google Colab de ser preferencia:
 3. Ejecutar el programa: sistemagestiondepaises.py
 
 4. Funcionalidades del sistema:
-
 Se desplegará el menu principal donde se podra observar las siguentes opciones:
 
 -----------------------------------------
-            GESTION DE PAISES                       
+            GESTION DE PAISES                        
 -----------------------------------------
 
 1 - Agregar país
@@ -51,9 +50,9 @@ Se desplegará el menu principal donde se podra observar las siguentes opciones:
 8 - Salir
 
 5. Seleccionar una opción a través del teclado númerico para interactuar con las opciones del sistema.
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-*Ejemplos de entrada/salida*
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Ejemplos de entrada/salida**
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. Agregar pais:
    
 Ingrese el nombre del país para agregar: Chile
@@ -74,7 +73,7 @@ Seleccione una opción: 2
 Población mínima (Enter para sin límite): 50000000
 Población máxima (Enter para sin límite): 200000000
 
-Nombre               Población     Superficie  Continente
+Nombre                Población     Superficie  Continente
 ----------------------------------------------------------
 Brasil               213,993,437   8,515,767   América
 Japón                125,800,000     377,975   Asia
@@ -106,16 +105,15 @@ Oceania : 0 paises.
 ¿Ordenar de forma ascendente o descendente?
 1 - Asc | 2 - Des: 2
 
-Nombre               Población     Superficie  Continente
+Nombre                Población     Superficie  Continente
 -----------------------------------------------------------------
 Japón                125,800,000     377,975   Asia
 Brasil               213,993,437   8,515,767   América
 Alemania              83,149,300     357,022   Europa
 Argentina             45,376,763   2,780,400   América
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-*Links importantes*
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Links importantes**
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Video de Youtube: [link]
 Documento PDF: [drive]
 Repositorio de Github: https://github.com/ClaudioLegrand/gestion_de_paises
