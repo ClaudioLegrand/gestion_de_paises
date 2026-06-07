@@ -34,6 +34,11 @@ def menu_buscar_paises():
         
         ------------------------------------------
         ''')
+    
+def salvarlinea(lineadepais):#salva de errores al programa si se manipula el archivo csv en ejecución (agregando lineas vacias)
+    if lineadepais == "\n":
+        return False
+    return True
 
 def cargardatos(archivo):
     paises=[]
@@ -47,6 +52,9 @@ def cargardatos(archivo):
             with open(archivo,"r",encoding="utf-8") as archivopaises: #se abre el archivo y se leen sus datos
                 encabezado=next(archivopaises).strip().split(",")
                 for fila in archivopaises:
+                    salva_linea=salvarlinea(fila)
+                    if not salva_linea:
+                        continue
                     partes=fila.strip().split(",")
                     dirpaises = dict(zip(encabezado, partes))
                     paises.append(dirpaises)
@@ -108,6 +116,30 @@ def añadir_datos_archivo(pais, archivo):
             linea = f"{pais['nombre']},{pais['poblacion']},{pais['superficie']},{pais['continente']}\n"
             f.write(linea)
         print("País agregado y guardado correctamente!")
+
+    except PermissionError:
+        print("Error: El archivo está siendo utilizado por otro programa. No se pudieron guardar los datos.")
+    except FileNotFoundError:
+        print("Error: El archivo no existe. No se pudieron guardar los datos.")
+    except Exception as e:
+        print(f"Error inesperado: {e}")
+
+def guardar_archivo(paises, archivo):
+    try:
+        with open(archivo, "w", encoding="utf-8") as f:
+                encabezado="nombre,poblacion,superficie,continente\n"
+                f.write(encabezado)
+                for fila in paises:
+                    salva_linea=salvarlinea(fila)
+                    if not salva_linea:
+                        continue
+                    linea = f"{fila['nombre']},{fila['poblacion']},{fila['superficie']},{fila['continente']}\n"
+                    f.write(linea)
+
+        print("Archivo guardado correctamente!")
+
+    except PermissionError:
+        print("Error: El archivo está siendo utilizado por otro programa. No se pudieron guardar los datos.")
     except FileNotFoundError:
         print("Error: El archivo no existe. No se pudieron guardar los datos.")
     except Exception as e:
@@ -206,7 +238,7 @@ def buscar_pais_por_nombre(paises):
 # --------------------------------------------------
 #              ORDENAR PAISES
 # --------------------------------------------------
-def seleccion_ordenar_paises():
+def seleccion_ordenar_paises(paises):
     opcion_orden = 0
     while opcion_orden != 4:
         menu_buscar_paises()
@@ -291,7 +323,8 @@ def mostrarestadisticas(paises):
     total=0
     for pais in paises:
         total+=int(pais["superficie"])
-        promediosuperficie = total / len(paises)
+
+    promediosuperficie = total / len(paises)
     print("-"*40)
     print("Superficie")
     print("-"*40)    
@@ -484,12 +517,13 @@ def seleccionmenu():
                 case 4:
                     menu_filtrar(paises)
                 case 5:
-                    seleccion_ordenar_paises()
+                    seleccion_ordenar_paises(paises)
                 case 6:
                     mostrarestadisticas(paises)
                 case 7:
                     outputmostrardatos(paises)    
                 case 8:
+                    guardar_archivo(paises, archivopaises)
                     print("Saliendo del sistema...")
                 case _:
                     print("Opción no válida. Por favor, seleccione una opción del 1 al 8. \n")
