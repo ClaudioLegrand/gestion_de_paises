@@ -13,11 +13,13 @@ Aplicación desarrollada en Python 3.14.0 que permite gestionar un dataset de pa
 
 El proyecto fue desarrollado como Trabajo Integrador de la materia Programación 1, con el objetivo de aplicar estructuras de datos (listas, diccionarios), modularización mediante funciones, manejo de archivos CSV y algoritmos de ordenamiento.
 
+--------------------------------------
 Integrantes
 
 - Claudio Legrand (Comisión 19)
 - Christian Herrero (Comision 8)
 
+--------------------------------------
 Requisitos
 
 - Python 3.14.0
@@ -114,6 +116,5 @@ Argentina             45,376,763   2,780,400   América
 
 Links importantes
 
-Video de Youtube: [link]
-Documento PDF: [drive]
+Video de Youtube: https://youtu.be/9BL8QhnT4yc
 Repositorio de Github: https://github.com/ClaudioLegrand/gestion_de_paises
